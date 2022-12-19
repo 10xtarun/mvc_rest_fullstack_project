@@ -1,4 +1,5 @@
 const express = require("express")
+const path = require("path")
 const { gracefulShutdown, shutDownHandler } = require("./utils")
 
 function app() {
@@ -7,6 +8,23 @@ function app() {
 
     console.log("initiating server start sequence")
     return Promise.resolve()
+    .then(() => {
+        // attach middlewares
+    })
+    .then(() => {
+        // View routes
+        app.get("/",(req, res) => {
+            return res.sendFile(path.join(__dirname, "views", "index.html"))
+        })
+
+        app.get("/todos", (req, res) => {
+            return res.sendFile(path.join(__dirname, "views", "todos.html"))
+        })
+
+        app.get("/profile", (req, res) => {
+            return res.sendFile(path.join(__dirname, "views", "profile.html"))
+        })
+    })
     .then(() => {
         // API routes
         app.get("/greetings", (req, res) => {
