@@ -1,6 +1,7 @@
 const express = require("express")
 const path = require("path")
 const { gracefulShutdown, shutDownHandler } = require("./utils")
+const authRouter = require("./routes/authentication")
 
 function app() {
     let server
@@ -32,6 +33,8 @@ function app() {
                 message: "Hello World!"
             })
         })
+
+        app.use("/api/auth", authRouter)
     })
     .then(() => {
         server = app.listen(8000, (error) => {
