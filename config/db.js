@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const URI = 'mongodb+srv://10xtarun:10xtarun@cluster0.f3zruyr.mongodb.net/?retryWrites=true&w=majority'
+const URI = ''
 
 const connectDb = () => {
   mongoose.set('strictQuery', false)
