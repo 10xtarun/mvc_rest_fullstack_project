@@ -19,7 +19,8 @@
   "author": "Tarun Singh",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
   },
   "devDependencies": {
     "eslint": "^8.30.0",

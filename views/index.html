@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
+
 <body>
-    <H1>Hello Home!</H1>
+    <H1>Welcome to Home!</H1>
+
+    <h3>Please Login Here</h3>
     <form action="/api/auth/login" method="post">
-        <input type="email" name="email" placeholder="test@example.com" requied />
-        <input type="password" name="password" requied />
-        <input type="submit" value="Login" /> 
+        <input type="email" name="email" placeholder="test@example.com" required />
+        <input type="password" name="password" required />
+        <input type="submit" value="Login" />
     </form>
+    <br />
+
+    <h3>Please Register Here</h3>
+    <form id="regForm" action="/api/auth/register" method="post" onsubmit="send(event,this)">
+        <input type="text" name="name" placeholder="John Doe" required />
+        <input type="email" name="email" placeholder="test@example.com" required />
+        <input type="text" name="username" placeholder="john123" required />
+        <input type="submit" value="Register" />
+    </form>
+    <br />
+
+
 </body>
+<script>
+    function send(ev, form) {
+        ev.preventDefault()
+
+        fetch(form.action, {
+            method: "POST",
+            body: new URLSearchParams(new FormData(form))
+        })
+            .then(res => {
+                if(res.ok) {
+                    window.location.replace("/profile")
+                    return
+                }
+                return res.json()
+            })
+            .then(res => {
+                if(!res) return
+                if(res.error) 
+                    throw res.error
+            })
+            .catch(error => alert(error.message ? error.message : error.toString()))
+    }
+</script>
+
 </html>

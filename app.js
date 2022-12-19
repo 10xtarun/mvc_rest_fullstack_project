@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const { gracefulShutdown, shutDownHandler } = require('./utils')
 const authRouter = require('./routes/authentication')
+const connectDb = require('./config/db')
 
 function app () {
   let server
@@ -9,8 +10,11 @@ function app () {
 
   console.log('initiating server start sequence')
   return Promise.resolve()
+    .then(() => connectDb())
     .then(() => {
       // attach middlewares
+      app.use(express.urlencoded({ extended: false }))
+      app.use(express.json())
     })
     .then(() => {
       // View routes
