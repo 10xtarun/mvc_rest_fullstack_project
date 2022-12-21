@@ -3,10 +3,12 @@ const path = require('path')
 const { gracefulShutdown, shutDownHandler } = require('./utils')
 const authRouter = require('./routes/authentication')
 const connectDb = require('./config/db')
+const dotenv = require('dotenv')
 
 function app () {
   let server
   const app = express()
+  dotenv.config()
 
   console.log('initiating server start sequence')
   return Promise.resolve()

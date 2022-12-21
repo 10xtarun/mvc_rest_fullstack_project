@@ -1,3 +1,4 @@
 # files not to be pushed
 node_modules
 package-lock.json
+.env

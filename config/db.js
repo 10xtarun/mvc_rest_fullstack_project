@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
 
-const URI = ''
-
 const connectDb = () => {
   mongoose.set('strictQuery', false)
-  mongoose.connect(URI, (error) => {
+  mongoose.connect(process.env.MONGO_URI, (error) => {
     if (error) throw error
     console.log('database connection established')
   })
