@@ -12,18 +12,23 @@
     <H1>Welcome to Home!</H1>
 
     <h3>Please Login Here</h3>
-    <form action="/api/auth/login" method="post">
+    <form id="regForm" action="/api/auth/login" method="post" onsubmit="send(event,this)">
         <input type="email" name="email" placeholder="test@example.com" required />
-        <input type="password" name="password" required />
+        <input type="password" name="password" placeholder="password" required />
+        <br/>
+        <br/>
         <input type="submit" value="Login" />
     </form>
-    <br />
+    <hr />
 
     <h3>Please Register Here</h3>
     <form id="regForm" action="/api/auth/register" method="post" onsubmit="send(event,this)">
         <input type="text" name="name" placeholder="John Doe" required />
         <input type="email" name="email" placeholder="test@example.com" required />
         <input type="text" name="username" placeholder="john123" required />
+        <input type="password" name="password" placeholder="password" required />
+        <br/>
+        <br/>
         <input type="submit" value="Register" />
     </form>
     <br />
@@ -38,17 +43,21 @@
             method: "POST",
             body: new URLSearchParams(new FormData(form))
         })
+            .then(res => res.json())
             .then(res => {
-                if(res.ok) {
+                if(res && res.data) {
+                    console.log("----RES--- ", res)
+                    localStorage.setItem("access_token", res.data.access_token)
                     window.location.replace("/profile")
                     return
                 }
-                return res.json()
-            })
-            .then(res => {
-                if(!res) return
-                if(res.error) 
+                else if(res.error) {
                     throw res.error
+                } 
+                else {
+                    throw Error("something went wrong")
+                }
+                
             })
             .catch(error => alert(error.message ? error.message : error.toString()))
     }

@@ -4,6 +4,8 @@ const { gracefulShutdown, shutDownHandler } = require('./utils')
 const authRouter = require('./routes/authentication')
 const connectDb = require('./config/db')
 const dotenv = require('dotenv')
+const utils = require('./utils')
+const profileRouter = require('./routes/profile')
 
 function app () {
   let server
@@ -41,6 +43,7 @@ function app () {
       })
 
       app.use('/api/auth', authRouter)
+      app.use('/api/profile', profileRouter)
     })
     .then(() => {
       server = app.listen(8000, (error) => {
@@ -51,6 +54,7 @@ function app () {
     .then(() => {
       // declare globals here
       global.app = app
+      global.utils = utils
 
       gracefulShutdown(server)
     })

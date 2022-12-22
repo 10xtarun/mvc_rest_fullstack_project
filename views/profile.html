@@ -7,6 +7,41 @@
     <title>Profile</title>
 </head>
 <body>
-    <H1>Hello Profile!</H1>
+    <H1>User Profile</H1>
+    <div id="showUser">
+
+    </div>
 </body>
+<script>
+    fetch("/api/profile", {
+        method: "GET",
+        headers: {
+            "Authorization": localStorage.getItem("access_token")
+        }
+    })
+    .then(res => res.json())
+    .then(res => {
+        console.log(res)
+        if(res && res.data)  {
+            const userDiv = document.getElementById("showUser")
+
+            Object.keys(res.data).map(key => {
+                const newElement = document.createElement("p")
+                 newElement.innerText = `${key}: ${res.data[key]}`
+                 userDiv.append(newElement)
+            })
+        }
+        else if(res.error) {
+            throw res.error
+        }
+        else {
+            throw Error("something went wrong")
+        }
+    })
+    .catch(error => { 
+        alert(error.message ? error.message : error.toString())
+        window.location.replace("/")
+    })
+
+</script>
 </html>
